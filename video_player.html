@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Emotion Video Player</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='video.css') }}" />
+</head>
+<body>
+  <video id="emotionVideo" autoplay>
+    <source src="" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <script>
+    const video = document.getElementById('emotionVideo');
+
+    // Get emotion from URL path: e.g. /play_video/happy
+    const path = window.location.pathname;
+    const emotion = path.split('/').pop();
+
+    // Set the video source dynamically
+    video.querySelector('source').src = `/desktop_videos/${emotion}_refresh.mp4`;
+    video.load();
+
+    // When video ends, redirect back to main page
+    video.onended = () => {
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 1000); // optional 1 second delay before redirect
+    };
+  </script>
+</body>
+</html>
